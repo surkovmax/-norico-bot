@@ -891,19 +891,14 @@ async def handle_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def menu_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await start(update, context)
 
-async def main():
+def main():
     app = Application.builder().token(TOKEN).build()
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CommandHandler("menu", menu_command))
     app.add_handler(CallbackQueryHandler(handle_callback))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_text))
     print("Бот запущен...")
-    async with app:
-        await app.start()
-        await app.updater.start_polling()
-        await app.updater.idle()
-        await app.stop()
+    app.run_polling(drop_pending_updates=True)
 
 if __name__ == "__main__":
-    import asyncio
-    asyncio.run(main())
+    main()

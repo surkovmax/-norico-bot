@@ -798,6 +798,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
 async def handle_text(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    print(f"THREAD_ID={update.message.message_thread_id} CHAT_ID={update.message.chat_id}")
     query = update.message.text.strip()
     if not query or len(query) < 2:
         await update.message.reply_text("Введите название блюда или ингредиент (минимум 2 символа).")
